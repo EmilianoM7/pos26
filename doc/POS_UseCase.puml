@@ -1,0 +1,99 @@
+@startuml
+
+' --- SKIN ---
+
+skinparam actorStyle Hollow
+left to right direction
+skinparam usecase {
+    BackgroundColor<<list>> DarkSeaGreen
+    BorderColor<<list>> DarkGreen
+
+    BackgroundColor<<reg>> LightSalmon
+    BorderColor<<reg>> DarkRed
+
+    BackgroundColor<<act>> Gold
+    BorderColor<<act>> Black
+
+    BackgroundColor<<tx>> DeepSkyBlue
+    BorderColor<<tx>> Black
+}
+
+' --- DIAGRAMA ---
+
+rectangle UseCase{
+
+    :Vendedor: as V
+    :Admin: as A
+
+    A -|> V
+
+    rectangle CORE{
+
+        (Rubros)<<list>> as LR
+        (Categorias)<<list>> as LCA
+        (Marcas)<<list>> as LM
+        (Items)<<list>> as LI
+        (Cliente)<<list>> as LC
+        (Proveedores)<<list>> as LP
+
+        (Item)<<reg>> as RI
+        (Categoria)<<reg>> as RCA
+        (Rubro)<<reg>> as RR
+        (Marca)<<reg>> as RM
+        (Cliente)<<reg>> as RC
+        (Proveedor)<<reg>> as RP
+        (Compra)<<tx>> as Rc
+        (Venta)<<tx>> as Rv
+        (Movimiento)<<reg>> as RMV
+        (Stock)<<act>> as AS
+    }
+
+    V --> Rv
+    Rv ..> RC
+    Rv ..> RMV
+    Rv ..> LI
+    RI .up.> LM
+    RI .up.> LCA
+
+    V --> LP
+    LP --> RP
+
+    V ---> Rc
+    Rc ..> LI
+    Rc ..> LP
+
+    V ---> LC
+    LC ..> RC
+    LC ..> RMV
+
+    V ---> LI
+    LI ..> RI
+    LI ..> AS
+
+
+    V ---> LM
+    LM ..> RM
+
+    V ---> LCA
+    LCA --> RCA
+    RCA .up.> LR
+
+    V ---> LR
+    LR --> RR
+
+    rectangle admin{
+        (Resumen)<<res>> as RRR
+        (Vendedor)<<reg>> as RVE
+        (Vendedores)<<list>> as LVE
+    }
+
+    A --> RRR
+
+    A --> LVE
+    LVE --> RVE
+
+    CORE -[hidden]down-> admin
+
+}
+
+@enduml

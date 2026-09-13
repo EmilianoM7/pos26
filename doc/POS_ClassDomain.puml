@@ -1,0 +1,91 @@
+@startuml
+
+rectangle Domain{
+
+    class Venta{
+        - feha
+    }
+
+    class Compra{
+        - fecha
+    }
+
+    class Proveedor{
+        - nombre
+    }
+
+    class DetalleVenta{
+        - cantidad
+        - pUnitario
+    }
+
+    class DetalleCompra{
+        - cantidad
+        - pUnitario
+    }
+
+    class Producto{
+        - nombre
+        - descripcion
+        - tamaño
+        - precioCompra
+        - precioVenta
+    }
+
+    class Rubro{
+         - nombre
+         - descripcion
+    }
+
+    class Categoria{
+        - nombre
+        - descripcion
+    }
+
+    class Marca{
+        - nombre
+    }
+
+    class Cliente{
+        - nombre
+        - apellido
+        - saldo
+    }
+
+    class Movimiento{
+        - monto
+    }
+
+    enum TipoMovimiento{
+        * Debito
+        * Credito
+    }
+
+    class Vendedor{
+        - fechaIngreso
+    }
+
+    Venta --> Vendedor
+    Venta --> Cliente
+    Venta *--> DetalleVenta
+    Venta o--> "0..1" Movimiento
+
+    Compra --> DetalleCompra
+    Compra --> Proveedor
+
+    DetalleCompra --> Producto
+
+    DetalleVenta --> Producto
+
+    Producto --> Categoria
+    Producto --> Marca
+
+    Categoria --> Rubro
+
+    Cliente o--> "0..*" Movimiento
+
+    Movimiento --> TipoMovimiento
+
+}
+
+@enduml
